@@ -115,6 +115,7 @@ class Manager():
         self.weatherinfo = {}
         self.units = "Metric"
 
+        # Use http://www.barth-dev.de/online/rgb565-color-picker/ to convert colors
         self._theme = (
                 b'\x7b\xef'     # ble
                 b'\x7b\xef'     # scroll-indicator
@@ -122,8 +123,12 @@ class Manager():
                 b'\xe7\x3c'     # status-clock
                 b'\x7b\xef'     # notify-icon
                 b'\xff\xff'     # bright
-                b'\xbd\xb6'     # mid
-                b'\x39\xff'     # ui
+                # b'\xbd\xb6'     # mid
+                # b'\x39\xff'     # ui
+                # yellowish orange
+                b'\xfd\x83'     # mid
+                # orange
+                b'\xf3\x84'     # ui
                 b'\xff\x00'     # spot1
                 b'\xdd\xd0'     # spot2
                 b'\x00\x0f'     # contrast
@@ -165,7 +170,8 @@ class Manager():
 
     def register_defaults(self):
         """Register the default applications."""
-        self.register('apps.clock.ClockApp', True, no_except=True)
+        # self.register('apps.clock.ClockApp', True, no_except=True)
+        self.register('apps.chrono.ChronoApp', True, no_except=True)
         self.register('apps.steps.StepCounterApp', True, no_except=True)
         self.register('apps.stopwatch.StopwatchApp', True, no_except=True)
         self.register('apps.heart.HeartApp', True, no_except=True)

@@ -23,8 +23,8 @@ class FacesApp():
     def foreground(self):
         """Activate the application."""
         choices = []
-        choices.append(('clock', 'Clock'))
         choices.append(('chrono', 'Chrono'))
+        choices.append(('clock', 'Clock'))
         choices.append(('dual_clock', 'DualClock'))
         choices.append(('fibonacci_clock', 'FibonacciClock'))
         choices.append(('word_clock', 'WordClock'))
