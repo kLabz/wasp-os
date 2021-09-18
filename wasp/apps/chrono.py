@@ -93,13 +93,12 @@ class ChronoApp():
 
         now = wasp.watch.rtc.get_localtime()
         battery = int(wasp.watch.battery.level() / 100 * 239)
-        # battery = int(60 / 100 * 239) # TODO: remove
 
         if not redraw and self.__ss == now[5] and self.__battery == battery:
             return
 
         redraw_triangles = False
-        if abs(battery - self.__battery) > 20:
+        if abs(battery - self.__battery) > 15:
             redraw_triangles = True
 
         if redraw:
@@ -112,50 +111,63 @@ class ChronoApp():
             draw.blit(icons.wf_heart, 4, 219, mid)
             draw.blit(icons.wf_steps, 217, 218, ui)
 
-            # Reset cached values to force redraw
-            self.__st = -1
-            self.__hr = -2
-
-        if redraw_triangles:
-            # Optimized way of drawing the triangles
-            # Might be possible to optimize further, but works well enough
-            display = draw._display
-            display.set_window(0, 0, 240, 214)
-            display.quick_start()
-            for i in range(0, 82):
-                buf = display.linebuffer
-                bg_len = math.floor((i*239) / 214)
-                bg_pos = 239 - bg_len
-                bar_len = math.floor((i*battery) / 214)
-                _fill(buf, 0, bg_pos, 0)
-                _fill(buf, mid, bar_len, bg_pos)
-                _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
-                display.quick_write(buf)
-            for i in range(82, 136):
-                buf = display.linebuffer
-                _fill(buf, 0, 239, 0)
-                display.quick_write(buf)
-            for i in range(136, 214):
-                buf = display.linebuffer
-                bg_len = math.floor((i*239) / 214)
-                bg_pos = 239 - bg_len
-                bar_len = math.floor((i*battery) / 214)
-                _fill(buf, mid, bar_len, bg_pos)
-                _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
-                display.quick_write(buf)
-            display.quick_end()
-
             # Prepare clock
             draw.set_color(mid)
             draw.set_font(sans36)
             draw.string(':', 84, 91, 18)
 
             # Reset cached values to force redraw
+            self.__dd = -1
             self.__hh = -1
             self.__mm = -1
             self.__ss = -1
-            self.__dd = -1
+            self.__st = -1
+            self.__hr = -2
+
+        if redraw_triangles:
+            # Optimized way of drawing the triangles
+            display = draw._display
+            display.quick_start()
+
+            # Top "half" -- part with date
+            display.set_window(160, 0, 80, 24)
+            for i in range(0, 24):
+                buf = display.linebuffer[0:80*2]
+                bg_len = math.floor((i*240) / 214)
+                bg_pos = 80 - bg_len
+                bar_len = math.floor((i*battery) / 214)
+                _fill(buf, 0, bg_pos, 0)
+                _fill(buf, mid, bar_len, bg_pos)
+                _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
+                display.quick_write(buf)
+
+            # Top "half" -- rest
+            display.set_window(0, 24, 240, 82 - 24)
+            for i in range(0, 82 - 24):
+                buf = display.linebuffer
+                bg_len = math.floor(((i+24)*240) / 214)
+                bg_pos = 240 - bg_len
+                bar_len = math.floor(((i+24)*battery) / 214)
+                _fill(buf, 0, bg_pos, 0)
+                _fill(buf, mid, bar_len, bg_pos)
+                _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
+                display.quick_write(buf)
+
+            # Bottom "half"
+            display.set_window(0, 136, 240, 214 - 136)
+            for i in range(0, 214 - 136):
+                buf = display.linebuffer
+                bg_len = math.floor(((i+136)*240) / 214)
+                bg_pos = 240 - bg_len
+                bar_len = math.floor(((i+136)*battery) / 214)
+                _fill(buf, mid, bar_len, bg_pos)
+                _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
+                display.quick_write(buf)
+
+            display.quick_end()
+
         else:
+            # "Animated" battery state change
             if self.__battery != battery:
                 maxBattery = min(239, max(battery, self.__battery) + 2)
                 minBattery = max(0, min(battery, self.__battery) - 2)
