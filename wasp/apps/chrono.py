@@ -97,14 +97,9 @@ class ChronoApp():
         if not redraw and self.__ss == now[5] and self.__battery == battery:
             return
 
-        redraw_triangles = False
-        if abs(battery - self.__battery) > 15:
-            redraw_triangles = True
-
         if redraw:
             # Clear the display
             draw.fill()
-            redraw_triangles = True
 
             # Prepare heart rate/steps
             # TODO: fix bad colors
@@ -117,6 +112,7 @@ class ChronoApp():
             draw.string(':', 84, 91, 18)
 
             # Reset cached values to force redraw
+            self.__battery = -1
             self.__dd = -1
             self.__hh = -1
             self.__mm = -1
@@ -124,7 +120,7 @@ class ChronoApp():
             self.__st = -1
             self.__hr = -2
 
-        if redraw_triangles:
+        if self.__battery != battery:
             # Optimized way of drawing the triangles
             display = draw._display
             display.quick_start()
@@ -166,24 +162,6 @@ class ChronoApp():
 
             display.quick_end()
 
-        else:
-            # "Animated" battery state change
-            if self.__battery != battery:
-                maxBattery = min(239, max(battery, self.__battery) + 2)
-                minBattery = max(0, min(battery, self.__battery) - 2)
-
-                for i in range(maxBattery, min(battery + 1, 239), -1):
-                    x = i + int(((213-136) * (239-i)) / 213)
-                    draw.line(i, 213, x, 136, 1, ui)
-                    x = i + int(((213-81) * (239-i)) / 213)
-                    draw.line(x, 81, 239, 0, 1, ui)
-
-                for i in range(minBattery, battery):
-                    x = i + int(((213-136) * (239-i)) / 213)
-                    draw.line(i, 213, x, 136, 1, mid)
-                    x = i + int(((213-81) * (239-i)) / 213)
-                    draw.line(x, 81, 239, 0, 1, mid)
-
         if self.__dd != now[2]:
             dyear = now[0]
             dmonth = now[1] - 2
@@ -218,7 +196,8 @@ class ChronoApp():
             draw.set_font(sans28)
             draw.string('{}'.format(now[5]).zfill(2), 167, 99, 56)
 
-        hr = -1 # TODO: get heart rate somehow
+        # TODO: fetch real data somehow..
+        hr = -1
         if self.__hr != hr:
             draw.set_color(mid)
             draw.set_font(sans18)
