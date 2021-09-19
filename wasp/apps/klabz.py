@@ -122,22 +122,24 @@ class KLabzApp():
         if self.__battery != battery:
             # Optimized way of drawing the triangles
             display = draw._display
-            display.quick_start()
 
             # Top "half" -- part with date
-            display.set_window(160, 0, 80, 24)
+            display.set_window(180, 0, 60, 24)
+            display.quick_start()
             for i in range(0, 24):
-                buf = display.linebuffer[0:80*2]
+                buf = display.linebuffer[0:60*2]
                 bg_len = math.floor((i*240) / 214)
-                bg_pos = 80 - bg_len
+                bg_pos = 60 - bg_len
                 bar_len = math.floor((i*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
                 display.quick_write(buf)
+            display.quick_end()
 
             # Top "half" -- rest
             display.set_window(0, 24, 240, 82 - 24)
+            display.quick_start()
             for i in range(0, 82 - 24):
                 buf = display.linebuffer
                 bg_len = math.floor(((i+24)*240) / 214)
@@ -147,9 +149,11 @@ class KLabzApp():
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
                 display.quick_write(buf)
+            display.quick_end()
 
             # Bottom "half"
             display.set_window(0, 136, 240, 214 - 136)
+            display.quick_start()
             for i in range(0, 214 - 136):
                 buf = display.linebuffer
                 bg_len = math.floor(((i+136)*240) / 214)
@@ -158,23 +162,13 @@ class KLabzApp():
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
                 display.quick_write(buf)
-
             display.quick_end()
 
         if self.__dd != now[2]:
-            dyear = now[0]
-            dmonth = now[1] - 2
-            if dmonth <= 0:
-                dmonth += 12
-                dyear -= 1
-            c = math.floor(dyear / 100)
-            dyear = dyear - (c * 100)
-            wd = (now[2] + math.floor(2.6 * dmonth - 0.2) - 2 * c + dyear + math.floor(dyear/4) + math.floor(c/4)) % 7
             days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
-
             draw.set_color(hi)
             draw.set_font(sans24)
-            day = days[wd - 1]
+            day = days[now[6]]
             draw.string(day, 6, 6)
             draw.set_color(mid)
             draw.string('{}'.format(now[2]), 10 + draw.bounding_box(day)[0], 6)
@@ -182,18 +176,27 @@ class KLabzApp():
         if self.__hh != now[3]:
             draw.set_color(hi)
             draw.set_font(sans36)
-            draw.string('{}'.format(now[3]).zfill(2), 17, 91, 72)
+            if now[3] < 10:
+                draw.string('0{}'.format(now[3]), 17, 91, 72)
+            else:
+                draw.string('{}'.format(now[3]), 17, 91, 72)
             draw.set_color(0)
 
         if self.__mm != now[4]:
             draw.set_color(hi)
             draw.set_font(sans36)
-            draw.string('{}'.format(now[4]).zfill(2), 97, 91, 72)
+            if now[4] < 10:
+                draw.string('0{}'.format(now[4]), 97, 91, 72)
+            else:
+                draw.string('{}'.format(now[4]), 97, 91, 72)
 
         if self.__ss != now[5]:
             draw.set_color(mid)
             draw.set_font(sans28)
-            draw.string('{}'.format(now[5]).zfill(2), 167, 99, 56)
+            if now[5] < 10:
+                draw.string('0{}'.format(now[5]), 167, 99, 56)
+            else:
+                draw.string('{}'.format(now[5]), 167, 99, 56)
 
         # TODO: fetch real data somehow..
         hr = -1
@@ -206,7 +209,10 @@ class KLabzApp():
             else:
                 draw.string('{}'.format(hr), 25, 219)
 
-        st = wasp.watch.accel.steps
+        try:
+            st = wasp.watch.accel.steps
+        except:
+            st = 0
         if self.__st != st:
             draw.set_color(ui)
             draw.set_font(sans18)

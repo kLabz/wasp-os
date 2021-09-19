@@ -12,6 +12,7 @@ manifest = (
     'apps/gameoflife.py',
     'apps/haiku.py',
     'apps/heart.py',
+    'apps/klabz.py',
     'apps/musicplayer.py',
     'apps/launcher.py',
     'apps/pager.py',
@@ -28,6 +29,7 @@ manifest = (
     'fonts/sans24.py',
     'fonts/sans28.py',
     'fonts/sans36.py',
+    'fonts/sans18.py',
     'icons.py',
     'widgets.py',
 )

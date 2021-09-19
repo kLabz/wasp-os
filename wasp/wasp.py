@@ -20,6 +20,7 @@ import micropython
 import watch
 import widgets
 
+# from apps.clock import ClockApp
 from apps.klabz import KLabzApp
 from apps.heart import HeartApp
 from apps.launcher import LauncherApp
@@ -27,7 +28,7 @@ from apps.pager import PagerApp, CrashApp, NotificationApp
 from apps.settings import SettingsApp
 from apps.steps import StepCounterApp
 from apps.software import SoftwareApp
-from apps.stopwatch import StopwatchApp
+# from apps.stopwatch import StopwatchApp
 
 class EventType():
     """Enumerated interface actions.
@@ -151,7 +152,7 @@ class Manager():
         # TODO: Eventually these should move to main.py
         for app, qr in ( (KLabzApp, True),
                          (StepCounterApp, True),
-                         (StopwatchApp, True),
+                         # (StopwatchApp, True),
                          (HeartApp, True),
                          (SoftwareApp, False),
                          (SettingsApp, False) ):
