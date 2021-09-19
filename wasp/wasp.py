@@ -20,7 +20,7 @@ import micropython
 import watch
 import widgets
 
-from apps.clock import ClockApp
+from apps.klabz import KLabzApp
 from apps.heart import HeartApp
 from apps.launcher import LauncherApp
 from apps.pager import PagerApp, CrashApp, NotificationApp
@@ -116,6 +116,7 @@ class Manager():
         self.musicstate = {}
         self.musicinfo = {}
 
+        # Use http://www.barth-dev.de/online/rgb565-color-picker/ to convert colors
         self._theme = (
                 b'\x7b\xef'     # ble
                 b'\x7b\xef'     # scroll-indicator
@@ -123,8 +124,10 @@ class Manager():
                 b'\xe7\x3c'     # status-clock
                 b'\x7b\xef'     # notify-icon
                 b'\xff\xff'     # bright
-                b'\xbd\xb6'     # mid
-                b'\x39\xff'     # ui
+                # b'\xbd\xb6'     # mid
+                # b'\x39\xff'     # ui
+                b'\xfd\x83'     # mid - yellowish orange
+                b'\xf3\x84'     # ui - orange
                 b'\xff\x00'     # spot1
                 b'\xdd\xd0'     # spot2
                 b'\x00\x0f'     # contrast
@@ -146,7 +149,7 @@ class Manager():
         self._scheduling = False
 
         # TODO: Eventually these should move to main.py
-        for app, qr in ( (ClockApp, True),
+        for app, qr in ( (KLabzApp, True),
                          (StepCounterApp, True),
                          (StopwatchApp, True),
                          (HeartApp, True),
