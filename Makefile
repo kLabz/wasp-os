@@ -110,7 +110,7 @@ check:
 .PHONY: bootloader reloader docs micropython
 
 dist: DIST=../wasp-os-$(VERSION)
-dist: k9
+dist: pinetime
 k9: p8
 p8: pinetime
 pinetime : mrproper
