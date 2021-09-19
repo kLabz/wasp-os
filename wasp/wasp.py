@@ -26,8 +26,10 @@ from apps.heart import HeartApp
 from apps.launcher import LauncherApp
 from apps.pager import PagerApp, CrashApp, NotificationApp
 from apps.settings import SettingsApp
-from apps.steps import StepCounterApp
+from apps.alarm import AlarmApp
+from apps.flashlight import TorchApp
 from apps.software import SoftwareApp
+from apps.steps import StepCounterApp
 # from apps.stopwatch import StopwatchApp
 
 class EventType():
@@ -151,9 +153,10 @@ class Manager():
 
         # TODO: Eventually these should move to main.py
         for app, qr in ( (KLabzApp, True),
-                         (StepCounterApp, True),
-                         # (StopwatchApp, True),
-                         (HeartApp, True),
+                         (AlarmApp, True),
+                         (TorchApp, True),
+                         (HeartApp, False),
+                         (StepCounterApp, False),
                          (SoftwareApp, False),
                          (SettingsApp, False) ):
             try:
