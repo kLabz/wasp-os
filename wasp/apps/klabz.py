@@ -95,8 +95,18 @@ class KLabzApp():
         now = wasp.watch.rtc.get_localtime()
         battery = int(wasp.watch.battery.level() / 100 * 239)
         hr = -1 # TODO: fetch heart rate somehow..
-        plug = wasp.watch.battery.charging()
-        bluetooth = wasp.watch.connected()
+
+        # Try to avoid some crashes on startup..
+        try:
+            plug = wasp.watch.battery.charging()
+        except:
+            plug = False
+
+        # Try to avoid some crashes on startup..
+        try:
+            bluetooth = wasp.watch.connected()
+        except:
+            bluetooth = False
 
         # try/except is necessary if StepCounterApp is not launched
         try:
