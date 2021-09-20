@@ -42,6 +42,8 @@ class KLabzApp():
         self.__dd = -1
         self.__st = -1
         self.__hr = -2
+        self.__bluetooth = False
+        self.__plug = False
 
     def foreground(self):
         """Activate the application.
@@ -92,8 +94,8 @@ class KLabzApp():
 
         now = wasp.watch.rtc.get_localtime()
         battery = int(wasp.watch.battery.level() / 100 * 239)
-        plug = False # TODO: get this from somewhere
         hr = -1 # TODO: fetch heart rate somehow..
+        plug = wasp.watch.battery.charging()
         bluetooth = wasp.watch.connected()
 
         # try/except is necessary if StepCounterApp is not launched
@@ -143,12 +145,12 @@ class KLabzApp():
             display.quick_end()
 
             # Top "half" -- rest
-            display.set_window(0, 24, 240, 82 - 24)
+            display.set_window(80, 24, 160, 82 - 24)
             display.quick_start()
             for i in range(0, 82 - 24):
-                buf = display.linebuffer
+                buf = display.linebuffer[0:160*2]
                 bg_len = math.floor(((i+24)*240) / 214)
-                bg_pos = 240 - bg_len
+                bg_pos = 160 - bg_len
                 bar_len = math.floor(((i+24)*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
@@ -164,6 +166,7 @@ class KLabzApp():
                 bg_len = math.floor(((i+136)*240) / 214)
                 bg_pos = 240 - bg_len
                 bar_len = math.floor(((i+136)*battery) / 214)
+                _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
                 display.quick_write(buf)
@@ -177,6 +180,25 @@ class KLabzApp():
             draw.string(day, 6, 6)
             draw.set_color(mid)
             draw.string('{}'.format(now[2]), 10 + draw.bounding_box(day)[0], 6)
+
+        if self.__plug != plug:
+            if plug:
+                draw.blit(icons.wf_plug, 6, 28, mid)
+            else:
+                # Clear bluetooth icon too if any
+                draw.fill(0, 6, 28, 32, 18)
+
+        if self.__plug != plug or self.__bluetooth != bluetooth:
+            if bluetooth:
+                if plug:
+                    draw.blit(icons.wf_bluetooth, 28, 28, mid)
+                else:
+                    draw.blit(icons.wf_bluetooth, 6, 28, mid)
+            else:
+                if plug:
+                    draw.fill(0, 28, 28, 10, 18)
+                else:
+                    draw.fill(0, 6, 28, 10, 18)
 
         if self.__hh != now[3]:
             draw.set_color(hi)
@@ -203,21 +225,15 @@ class KLabzApp():
             else:
                 draw.string('{}'.format(now[5]), 167, 99, 56)
 
-        # TODO: fetch real data somehow..
-        hr = -1
         if self.__hr != hr:
             draw.set_color(mid)
             draw.set_font(sans18)
-            draw.fill(25, 219, 80, 18, 0)
+            draw.fill(0, 25, 219, 80, 18)
             if hr == -1:
                 draw.string('-', 25, 219)
             else:
                 draw.string('{}'.format(hr), 25, 219)
 
-        try:
-            st = wasp.watch.accel.steps
-        except:
-            st = 0
         if self.__st != st:
             draw.set_color(ui)
             draw.set_font(sans18)
@@ -225,6 +241,8 @@ class KLabzApp():
 
         # Update references
         self.__battery = battery
+        self.__bluetooth = bluetooth
+        self.__plug = plug
         self.__dd = now[2]
         self.__hh = now[3]
         self.__mm = now[4]
