@@ -270,7 +270,7 @@ class AlarmApp:
             draw.set_color(wasp.system.theme('bright'))
             draw.fill()
             self._draw_system_bar()
-            draw.line(0, 50, 240, 50, width=1, color=wasp.system.theme('bright'))
+            draw.line(0, 50, 239, 50, width=1, color=wasp.system.theme('bright'))
 
         for index in range(len(self.alarms)):
             if index < self.num_alarms and (update_alarm_row == _HOME_PAGE or update_alarm_row == index):
@@ -299,7 +299,7 @@ class AlarmApp:
         draw.set_font(fonts.sans18)
         draw.string(self._get_repeat_code(alarm[_ENABLED_IDX]), 130, 70 + (index * 45), width=60)
 
-        draw.line(0, 95 + (index * 45), 240, 95 + (index * 45), width=1, color=wasp.system.theme('bright'))
+        draw.line(0, 95 + (index * 45), 239, 95 + (index * 45), width=1, color=wasp.system.theme('bright'))
 
     def _draw_system_bar(self):
         sbar = wasp.system.bar
