@@ -21,13 +21,7 @@ import fonts.sans28 as sans28
 import fonts.sans24 as sans24
 import fonts.sans18 as sans18
 
-@micropython.viper
-def _fill(mv, color: int, count: int, offset: int):
-    p = ptr16(mv)
-    color = (color >> 8) + ((color & 0xff) << 8)
-
-    for x in range(offset, offset+count):
-        p[x] = color
+from draw565 import _fill
 
 class KLabzApp():
     """Custom watch face with some style
