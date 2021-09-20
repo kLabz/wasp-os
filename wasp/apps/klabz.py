@@ -92,23 +92,28 @@ class KLabzApp():
 
         now = wasp.watch.rtc.get_localtime()
         battery = int(wasp.watch.battery.level() / 100 * 239)
+        plug = False # TODO: get this from somewhere
+        hr = -1 # TODO: fetch heart rate somehow..
+        bluetooth = wasp.watch.connected()
 
-        if not redraw and self.__ss == now[5] and self.__battery == battery:
-            return
+        # try/except is necessary if StepCounterApp is not launched
+        try:
+            st = wasp.watch.accel.steps
+        except:
+            st = 0
 
         if redraw:
             # Clear the display
             draw.fill()
 
             # Prepare heart rate/steps
-            # TODO: fix bad colors
             draw.blit(icons.wf_heart, 4, 219, mid)
             draw.blit(icons.wf_steps, 217, 218, ui)
 
             # Prepare clock
             draw.set_color(mid)
             draw.set_font(sans36)
-            draw.string(':', 84, 91, 18)
+            draw.string(':', 85, 91, 18)
 
             # Reset cached values to force redraw
             self.__battery = -1
@@ -177,18 +182,18 @@ class KLabzApp():
             draw.set_color(hi)
             draw.set_font(sans36)
             if now[3] < 10:
-                draw.string('0{}'.format(now[3]), 17, 91, 72)
+                draw.string('0{}'.format(now[3]), 18, 91, 72)
             else:
-                draw.string('{}'.format(now[3]), 17, 91, 72)
+                draw.string('{}'.format(now[3]), 18, 91, 72)
             draw.set_color(0)
 
         if self.__mm != now[4]:
             draw.set_color(hi)
             draw.set_font(sans36)
             if now[4] < 10:
-                draw.string('0{}'.format(now[4]), 97, 91, 72)
+                draw.string('0{}'.format(now[4]), 98, 91, 72)
             else:
-                draw.string('{}'.format(now[4]), 97, 91, 72)
+                draw.string('{}'.format(now[4]), 98, 91, 72)
 
         if self.__ss != now[5]:
             draw.set_color(mid)
