@@ -123,8 +123,8 @@ class KLabzApp():
 
             # Reset cached values to force redraw
             self.__battery = -1
-            self.__bluetooth = -1
-            self.__plug = -1
+            self.__bluetooth = False
+            self.__plug = False
             self.__dd = -1
             self.__hh = -1
             self.__mm = -1
