@@ -137,12 +137,12 @@ class KLabzApp():
             display = draw._display
 
             # Top "half" -- part with date
-            display.set_window(180, 0, 60, 24)
+            display.set_window(200, 0, 40, 24)
             display.quick_start()
             for i in range(0, 24):
-                buf = display.linebuffer[0:60*2]
+                buf = display.linebuffer[0:40*2]
                 bg_len = math.floor((i*240) / 214)
-                bg_pos = 60 - bg_len
+                bg_pos = 40 - bg_len
                 bar_len = math.floor((i*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
