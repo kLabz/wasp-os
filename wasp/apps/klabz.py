@@ -137,12 +137,12 @@ class KLabzApp():
             display = draw._display
 
             # Top "half" -- part with date
-            display.set_window(200, 0, 40, 24)
+            display.set_window(210, 0, 30, 26)
             display.quick_start()
-            for i in range(0, 24):
-                buf = display.linebuffer[0:40*2]
+            for i in range(0, 26):
+                buf = display.linebuffer[0:30*2]
                 bg_len = math.floor((i*240) / 214)
-                bg_pos = 40 - bg_len
+                bg_pos = 30 - bg_len
                 bar_len = math.floor((i*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
@@ -151,13 +151,13 @@ class KLabzApp():
             display.quick_end()
 
             # Top "half" -- rest
-            display.set_window(80, 24, 160, 82 - 24)
+            display.set_window(80, 26, 160, 82 - 26)
             display.quick_start()
-            for i in range(0, 82 - 24):
+            for i in range(0, 82 - 26):
                 buf = display.linebuffer[0:160*2]
-                bg_len = math.floor(((i+24)*240) / 214)
+                bg_len = math.floor(((i+26)*240) / 214)
                 bg_pos = 160 - bg_len
-                bar_len = math.floor(((i+24)*battery) / 214)
+                bar_len = math.floor(((i+26)*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
@@ -180,6 +180,7 @@ class KLabzApp():
 
         if self.__dd != now[2]:
             days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+            draw.fill(0, 6, 6, 204, 20)
             draw.set_color(hi)
             draw.set_font(sans24)
             day = days[now[6]]
