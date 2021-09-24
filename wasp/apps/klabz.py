@@ -87,7 +87,8 @@ class KLabzApp():
         ui = wasp.system.theme('ui')
 
         now = wasp.watch.rtc.get_localtime()
-        battery = int(wasp.watch.battery.level() / 100 * 239)
+        battery_level = wasp.watch.battery.level()
+        battery = int(battery_level / 100 * 239)
         hr = -1 # TODO: fetch heart rate somehow..
 
         # Try to avoid some crashes on startup..
@@ -177,6 +178,11 @@ class KLabzApp():
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
                 display.quick_write(buf)
             display.quick_end()
+
+            if battery < 194:
+                draw.set_color(mid, ui)
+                draw.set_font(sans18)
+                draw.string('{}%'.format(battery_level), 200, 196, 38, True)
 
         if self.__dd != now[2]:
             days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
