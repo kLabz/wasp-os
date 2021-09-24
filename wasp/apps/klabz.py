@@ -141,28 +141,28 @@ class KLabzApp():
             display.set_window(210, 0, 30, 26)
             display.quick_start()
             for i in range(0, 26):
-                buf = display.linebuffer[0:30*2]
+                buf = display.linebuffer
                 bg_len = math.floor((i*240) / 214)
                 bg_pos = 30 - bg_len
                 bar_len = math.floor((i*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
-                display.quick_write(buf)
+                display.quick_write(buf[0:30*2])
             display.quick_end()
 
             # Top "half" -- rest
             display.set_window(80, 26, 160, 82 - 26)
             display.quick_start()
             for i in range(0, 82 - 26):
-                buf = display.linebuffer[0:160*2]
+                buf = display.linebuffer
                 bg_len = math.floor(((i+26)*240) / 214)
                 bg_pos = 160 - bg_len
                 bar_len = math.floor(((i+26)*battery) / 214)
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
-                display.quick_write(buf)
+                display.quick_write(buf[0:160*2])
             display.quick_end()
 
             # Bottom "half"
@@ -176,13 +176,13 @@ class KLabzApp():
                 _fill(buf, 0, bg_pos, 0)
                 _fill(buf, mid, bar_len, bg_pos)
                 _fill(buf, ui, bg_len - bar_len, bg_pos + bar_len)
-                display.quick_write(buf)
+                display.quick_write(buf[0:240*2])
             display.quick_end()
 
             if battery < 194:
                 draw.set_color(mid, ui)
                 draw.set_font(sans18)
-                draw.string('{}%'.format(battery_level), 200, 196, 38, True)
+                draw.string('{}%'.format(battery_level), 194, 196, 44, True)
 
         if self.__dd != now[2]:
             days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
