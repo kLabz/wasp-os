@@ -34,7 +34,7 @@ class KLabzApp():
         self.__mm = -1
         self.__ss = -1
         self.__dd = -1
-        self.__st = -1
+        self.__st = -2
         self.__hr = -2
         self.__bluetooth = False
         self.__plug = False
@@ -106,7 +106,7 @@ class KLabzApp():
         try:
             st = wasp.watch.accel.steps
         except:
-            st = 0
+            st = -1
 
         if redraw:
             # Clear the display
@@ -129,7 +129,7 @@ class KLabzApp():
             self.__hh = -1
             self.__mm = -1
             self.__ss = -1
-            self.__st = -1
+            self.__st = -2
             self.__hr = -2
 
         if self.__battery != battery:
@@ -244,7 +244,10 @@ class KLabzApp():
         if self.__st != st:
             draw.set_color(ui)
             draw.set_font(sans18)
-            draw.string('{}'.format(st), 133, 219, 80, True)
+            if st == -1:
+                draw.string('-', 133, 219, 80, True)
+            else:
+                draw.string('{}'.format(st), 133, 219, 80, True)
 
         # Update references
         self.__battery = battery
