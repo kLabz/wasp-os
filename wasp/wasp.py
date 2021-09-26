@@ -125,8 +125,10 @@ class Manager():
                 b'\xff\xff'     # bright
                 # b'\xbd\xb6'     # mid
                 # b'\x39\xff'     # ui
-                b'\xfd\x83'     # mid - yellowish orange
-                b'\xf3\x84'     # ui - orange
+                b'\xfe\x20'     # mid - yellowish orange
+                b'\xfa\xc0'     # ui - orange
+                # b'\xfd\x83'     # mid - yellowish orange
+                # b'\xf3\x84'     # ui - orange
                 b'\xff\x00'     # spot1
                 b'\xdd\xd0'     # spot2
                 b'\x00\x0f'     # contrast
