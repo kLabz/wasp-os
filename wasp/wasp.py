@@ -126,7 +126,7 @@ class Manager():
                 # b'\xbd\xb6'     # mid
                 # b'\x39\xff'     # ui
                 b'\xfe\x20'     # mid - yellowish orange
-                b'\xfa\xc0'     # ui - orange
+                b'\xfb\x80'     # ui - orange
                 # b'\xfd\x83'     # mid - yellowish orange
                 # b'\xf3\x84'     # ui - orange
                 b'\xff\x00'     # spot1
