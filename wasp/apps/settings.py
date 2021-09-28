@@ -21,12 +21,27 @@ time) to be set on the device itself.
 
 import wasp
 import fonts
-import icons
+
+# 2-bit RLE, 64x64, generated from ./res/settings_icon.png, 154 bytes
+icon = (
+    b'\x02'
+    b'@@'
+    b'?\xff\xffQ@\xc6D:H7J5D\x04D4'
+    b'C\x06C3C\x08C2C\x08C\x80\xc1\x9f\x13C'
+    b'\x08C\x9f\x13C\x08C3C\x06C4D\x04D5'
+    b'J7H:D?\\\xc4:\xc87\xca5\xc4\x04\xc4'
+    b'4\xc3\x06\xc33\xc3\x08\xc3\x13\x9f\xc3\x08\xc3\x13\x9f\xc3'
+    b'\x08\xc32\xc3\x08\xc33\xc3\x06\xc34\xc4\x04\xc45\xca'
+    b'7\xc8:\xc4?\x1eD:H7J5D\x04D4'
+    b'C\x06C3C\x08C2C\x08C\x9f\x13C\x08C'
+    b'\x9f\x13C\x08C3C\x06C4D\x04D5J7'
+    b'H:D?\xff\xffq'
+)
 
 class SettingsApp():
     """Settings application."""
     NAME = 'Settings'
-    ICON = icons.settings
+    ICON = icon
 
     def __init__(self):
         self._slider = wasp.widgets.Slider(3, 10, 90)

@@ -15,14 +15,37 @@ whilst still allowing users to activate so many awesome applications!
 """
 
 import wasp
-import icons
 import os
 
+# 2-bit RLE, 64x64, generated from ./res/software_icon.png, 298 bytes
+icon = (
+    b'\x02'
+    b'@@'
+    b'?\xff\x8b@\xc1J\x08J"N\x04N\n\xc2\x14N'
+    b'\x04N\t\xc4\x12P\x02P\x08\xc4\x12P\x02P\x08\xc4'
+    b'\x12P\x02P\x08\xc4\x12P\x02P\x04\xcc\x0eP\x02P'
+    b'\x03\xce\rP\x02P\x03\xce\rP\x02P\x04\xcc\x0eP'
+    b'\x02P\x08\xc4\x12P\x02P\x08\xc4\x12P\x02P\x08\xc4'
+    b'\x13N\x04N\t\xc4\x13N\x04N\n\xc2\x16J\x08J'
+    b'?e\x80\xc6\x8a\x08J\x08J\x10\x8e\x04N\x04N\x0e'
+    b'\x8e\x04N\x04N\r\x90\x02P\x02P\x0c\x90\x02P\x02'
+    b'P\x0c\x90\x02P\x02P\x0c\x90\x02P\x02P\x0c\x90\x02'
+    b'P\x02P\x0c\x90\x02P\x02P\x0c\x90\x02P\x02P\x0c'
+    b'\x90\x02P\x02P\x0c\x90\x02P\x02P\x0c\x90\x02P\x02'
+    b'P\r\x8e\x04N\x04N\x0e\x8e\x04N\x04N\x10\x8a\x08'
+    b'J\x08J?S\x8a\x08\x8a\x08J\x10\x8e\x04\x8e\x04N'
+    b'\x0e\x8e\x04\x8e\x04N\r\x90\x02\x90\x02P\x0c\x90\x02\x90'
+    b'\x02P\x0c\x90\x02\x90\x02P\x0c\x90\x02\x90\x02P\x0c\x90'
+    b'\x02\x90\x02P\x0c\x90\x02\x90\x02P\x0c\x90\x02\x90\x02P'
+    b'\x0c\x90\x02\x90\x02P\x0c\x90\x02\x90\x02P\x0c\x90\x02\x90'
+    b'\x02P\r\x8e\x04\x8e\x04N\x0e\x8e\x04\x8e\x04N\x10\x8a'
+    b'\x08\x8a\x08J?\xff\x0b'
+)
 
 class SoftwareApp():
     """Enable and disable applications."""
-    NAME = 'Software'
-    ICON = icons.software
+    NAME = 'Apps'
+    ICON = icon
 
     def foreground(self):
         """Activate the application."""
@@ -38,7 +61,7 @@ class SoftwareApp():
 
         y = 0
         db = []
-        db.append(('alarm', factory('Alarm')))
+        # db.append(('alarm', factory('Alarm')))
         db.append(('calc', factory('Calculator')))
         db.append(('faces', factory('Faces')))
         # db.append(('gameoflife', factory('Game Of Life')))
@@ -49,7 +72,7 @@ class SoftwareApp():
         db.append(('stopwatch', factory('Stopwatch')))
         db.append(('heart', factory('Heart')))
         db.append(('steps', factory('Step Counter')))
-        db.append(('flashlight', factory('Torch')))
+        # db.append(('flashlight', factory('Torch')))
         db.append(('testapp', factory('Test')))
         db.append(('timer', factory('Timer')))
         db.append(('weather', factory('Weather')))

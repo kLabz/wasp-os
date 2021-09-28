@@ -5,20 +5,20 @@ import wasp
 
 # Test app is used a lot on the simulator. Let's make sure it is
 # registered by default.
-wasp.system.register('apps.testapp.TestApp')
+# wasp.system.register('apps.testapp.TestApp')
 
 # Ensure there's something interesting to look at ;-)
 wasp.system.set_music_info({
-        'track': 'Tasteless Brass Duck',
-        'artist': 'Dreams of Bamboo',
-    })
+    'track': 'Tasteless Brass Duck',
+    'artist': 'Dreams of Bamboo',
+})
 
 wasp.system.set_weather_info({
     'temp': 295,
     'hum': 100,
     'txt': 'Cloudy',
     'wind': 25,
-    'loc': 'Toronto'
+    'loc': 'Vannes'
 })
 
 
@@ -30,7 +30,7 @@ wasp.system.blank_after = 300
 # (digital) clock with this alternative.
 #wasp.system.register('apps.chrono.ChronoApp', watch_face=True)
 
-# Enable the demostration application
+# Enable the demonstration application
 #wasp.system.register('apps.demo.DemoApp')
 
 # Adopt a basic all-orange theme

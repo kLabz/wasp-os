@@ -10,6 +10,7 @@
 
 import wasp
 import icons
+import fonts.sans18 as sans18
 
 class LauncherApp():
     """An application launcher application."""
@@ -50,7 +51,7 @@ class LauncherApp():
         page = self._get_page(self._page)
         x = event[1]
         y = event[2]
-        app = page[2 * (y // 120) + (x // 120)]
+        app = page[3 * (y // 74) + (x // 74)]
         if app:
             wasp.system.switch(app)
         else:
@@ -60,12 +61,12 @@ class LauncherApp():
     def _num_pages(self):
         """Work out what the highest possible pages it."""
         num_apps = len(wasp.system.launcher_ring)
-        return (num_apps + 3) // 4
+        return (num_apps + 8) // 9
 
     def _get_page(self, i):
         apps = wasp.system.launcher_ring
-        page = apps[4*i: 4*(i+1)]
-        while len(page) < 4:
+        page = apps[9*i: 9*(i+1)]
+        while len(page) < 9:
             page.append(None)
         return page
 
@@ -74,19 +75,24 @@ class LauncherApp():
         def draw_app(app, x, y):
             if not app:
                 return
-            draw.blit(app.ICON if 'ICON' in dir(app) else icons.app, x+13, y+12)
+            draw.blit(app.ICON if 'ICON' in dir(app) else icons.app, x+21, y+19)
+            draw.set_font(sans18)
             draw.set_color(wasp.system.theme('mid'))
-            draw.string(app.NAME, x, y+120-30, 120)
 
         draw = wasp.watch.drawable
         page_num = self._page
         page = self._get_page(page_num)
-        
+
         draw.fill()
         draw_app(page[0],   0,   0)
-        draw_app(page[1], 120,   0)
-        draw_app(page[2],   0, 120)
-        draw_app(page[3], 120, 120)
+        draw_app(page[1],  74,   0)
+        draw_app(page[2], 148,   0)
+        draw_app(page[3],   0,  74)
+        draw_app(page[4],  74,  74)
+        draw_app(page[5], 148,  74)
+        draw_app(page[6],   0, 148)
+        draw_app(page[7],  74, 148)
+        draw_app(page[8], 148, 148)
 
         scroll = self._scroll
         scroll.up = page_num > 0
