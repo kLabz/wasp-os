@@ -2,7 +2,7 @@ name: wasp-os binary distribution
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, parent-master ]
   pull_request:
     branches: [ master ]
 
@@ -48,10 +48,10 @@ jobs:
       run:  |
           export PATH=$PATH:${{ runner.temp }}/arm-none-eabi/bin
           make -j `nproc` submodules
-    
+
     - name: Download softdevice
       id:   download-softdevice
-      run:  |  
+      run:  |
           export PATH=$PATH:${{ runner.temp }}/arm-none-eabi/bin
           make -j `nproc` softdevice
 
