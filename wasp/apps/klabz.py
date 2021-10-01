@@ -14,7 +14,6 @@ Shows the time as a traditional watch face together with a battery meter.
 
 import math
 import wasp
-import micropython
 import fonts.sans36 as sans36
 import fonts.sans28 as sans28
 import fonts.sans24 as sans24
