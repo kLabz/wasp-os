@@ -75,7 +75,9 @@ class LauncherApp():
         def draw_app(app, x, y):
             if not app:
                 return
-            draw.blit(app.ICON if 'ICON' in dir(app) else icons.app, x+14, y+14)
+            draw.blit(app.ICON if 'ICON' in dir(app) else icons.app, x+14, y+14,
+                    wasp.system.theme('bright'), wasp.system.theme('mid'),
+                    wasp.system.theme('ui'), True)
             draw.set_font(sans18)
             draw.set_color(wasp.system.theme('mid'))
 
