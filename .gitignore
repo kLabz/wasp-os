@@ -8,5 +8,6 @@ cscope.out
 docs/build
 attic/
 wasp/boards/*/watch.py
+wasp/wasp.py
 .idea
 .vscode
