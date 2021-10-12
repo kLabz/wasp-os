@@ -1,25 +1,28 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # Copyright (C) 2020 Daniel Thompson
 
-import wasp
+# import wasp
+from wasp import Wasp as wasp
+
+wasp.init()
 
 # Test app is used a lot on the simulator. Let's make sure it is
 # registered by default.
 # wasp.system.register('apps.testapp.TestApp')
 
 # Ensure there's something interesting to look at ;-)
-wasp.system.set_music_info({
-    'track': 'Tasteless Brass Duck',
-    'artist': 'Dreams of Bamboo',
-})
+# wasp.system.set_music_info({
+#     'track': 'Tasteless Brass Duck',
+#     'artist': 'Dreams of Bamboo',
+# })
 
-wasp.system.set_weather_info({
-    'temp': 295,
-    'hum': 100,
-    'txt': 'Cloudy',
-    'wind': 25,
-    'loc': 'Vannes'
-})
+# wasp.system.set_weather_info({
+#     'temp': 295,
+#     'hum': 100,
+#     'txt': 'Cloudy',
+#     'wind': 25,
+#     'loc': 'Vannes'
+# })
 
 
 # Increase the display blanking time to avoid spamming the console
