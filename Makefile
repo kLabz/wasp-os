@@ -89,11 +89,6 @@ debug:
 		-ex "attach 1" \
 		-ex "load"
 
-docs:
-	$(RM) -rf docs/build/html/*
-	$(MAKE) -C docs html
-	touch docs/build/html/.nojekyll
-
 sim:
 	PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:wasp/boards/simulator:wasp \
 	$(PYTHON) -i wasp/boards/simulator/main.py
@@ -107,7 +102,7 @@ check:
 	$(PYTEST) -v -W ignore $(PYTEST_RESTRICT) wasp/boards/simulator
 
 
-.PHONY: bootloader reloader docs micropython
+.PHONY: bootloader reloader micropython
 
 dist: DIST=../wasp-os-$(VERSION)
 dist: pinetime
@@ -125,13 +120,10 @@ mrproper :
 k9 p8 pinetime:
 	$(RM) wasp/boards/$@/watch.py
 	$(MAKE) BOARD=$@ all
-dist: docs
-	mkdir -p $(DIST)/docs
+dist:
 	cp COPYING COPYING.LGPL README.rst $(DIST)
-	cp -r docs/build/html/* $(DIST)/docs
 	cp -r build-*/ $(DIST)
 	cp -r tools/ $(DIST)
-	(cd $(DIST); ln -s docs/_images/ res)
 	find $(DIST) -name __pycache__ | xargs $(RM) -r
 	tar -C .. -zcf $(DIST).tar.gz $(notdir $(DIST))
 	(cd ..; zip -9r $(DIST).zip $(notdir $(DIST)))
