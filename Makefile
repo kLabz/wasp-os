@@ -121,6 +121,7 @@ k9 p8 pinetime:
 	$(RM) wasp/boards/$@/watch.py
 	$(MAKE) BOARD=$@ all
 dist:
+	mkdir -p $(DIST)
 	cp COPYING COPYING.LGPL README.rst $(DIST)
 	cp -r build-*/ $(DIST)
 	cp -r tools/ $(DIST)
