@@ -71,18 +71,16 @@ drawable = draw565.Draw565(display)
 
 def boot_msg(s):
     drawable.string(s, 0, 108, width=240)
-    if safe_mode:
-        time.sleep_ms(500)
-    else:
-        time.sleep_ms(50)
+    # if safe_mode:
+    time.sleep_ms(500)
 
 safe_mode = False
 boot_msg("Init button")
 button = Pin('BUTTON', Pin.IN)
 safe_mode = button.value()
-if safe_mode:
-    backlight.set(1)
-    time.sleep(1)
+# if safe_mode:
+backlight.set(1)
+time.sleep(1)
 
 try:
     # Setup the last few bits and pieces
