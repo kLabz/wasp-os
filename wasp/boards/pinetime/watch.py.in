@@ -73,6 +73,8 @@ def boot_msg(s):
     drawable.string(s, 0, 108, width=240)
     if safe_mode:
         time.sleep_ms(500)
+    else:
+        time.sleep_ms(50)
 
 safe_mode = False
 boot_msg("Init button")
