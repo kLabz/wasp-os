@@ -2,6 +2,7 @@
 # Copyright (C) 2020 Daniel Thompson
 
 from wasp import Wasp as wasp
-from gadgetbridge import *
+# TODO: fix that..
+# from gadgetbridge import *
 wasp.init()
 wasp.system.schedule()
