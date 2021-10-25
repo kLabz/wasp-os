@@ -46,6 +46,7 @@ class SoftwareApp():
         db.append(('play2048', factory('Play 2048')))
         db.append(('snake', factory('Snake Game')))
         db.append(('sports', factory('Sports')))
+        db.append(('steps', factory('Step Counter')))
         db.append(('flashlight', factory('Torch')))
         db.append(('testapp', factory('Test')))
         db.append(('timer', factory('Timer')))
