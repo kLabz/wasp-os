@@ -4,6 +4,7 @@
 """Generic lithium ion battery driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
+import math
 import micropython
 from machine import Pin, ADC
 
@@ -33,7 +34,7 @@ class Battery(object):
 
         :returns: True if the battery is charging, False otherwise.
         """
-        return self._charging.value() 
+        return self._charging.value()
 
     def power(self):
         """Check whether the device has external power.
@@ -67,7 +68,8 @@ class Battery(object):
         :returns: Estimate battery level in percent.
         """
         mv = self.voltage_mv()
-        level = ((19 * mv) // 100) - 660
+        # level = ((19 * mv) // 100) - 660
+        level = math.floor(5.5 + (mv-3500) * 0.135);
         if level > 100:
             return 100
         if level < 0:
