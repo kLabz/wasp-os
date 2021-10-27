@@ -21,7 +21,8 @@ Currently implemented messages are:
 import io
 import json
 import sys
-import wasp
+from wasp import Wasp
+import watch
 
 # JSON compatibility
 null = None
@@ -44,20 +45,20 @@ def GB(cmd):
 
     try:
         if task == 'find':
-            wasp.watch.vibrator.pin(not cmd['n'])
+            watch.vibrator.pin(not cmd['n'])
         elif task == 'notify':
             id = cmd['id']
             del cmd['id']
-            wasp.system.notify(id, cmd)
-            wasp.watch.vibrator.pulse(ms=wasp.system.notify_duration)
+            Wasp.system.notify(id, cmd)
+            watch.vibrator.pulse(ms=Wasp.system.nfylev_ms)
         elif task == 'notify-':
-            wasp.system.unnotify(cmd['id'])
+            Wasp.system.unnotify(cmd['id'])
         elif task == 'musicstate':
-            wasp.system.toggle_music(cmd)
+            Wasp.system.toggle_music(cmd)
         elif task == 'musicinfo':
-            wasp.system.set_music_info(cmd)
+            Wasp.system.set_music_info(cmd)
         elif task == 'weather':
-            wasp.system.set_weather_info(cmd)
+            Wasp.system.set_weather_info(cmd)
         else:
             pass
             #_info('Command "{}" is not implemented'.format(cmd))
