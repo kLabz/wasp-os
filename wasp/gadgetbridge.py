@@ -22,6 +22,7 @@ import io
 import json
 import sys
 from wasp import Wasp
+import watch
 
 # JSON compatibility
 null = None
@@ -44,12 +45,12 @@ def GB(cmd):
 
     try:
         if task == 'find':
-            Wasp.watch.vibrator.pin(not cmd['n'])
+            watch.vibrator.pin(not cmd['n'])
         elif task == 'notify':
             id = cmd['id']
             del cmd['id']
             Wasp.system.notify(id, cmd)
-            Wasp.watch.vibrator.pulse(ms=Wasp.system.nfylev_ms)
+            watch.vibrator.pulse(ms=Wasp.system.nfylev_ms)
         elif task == 'notify-':
             Wasp.system.unnotify(cmd['id'])
         elif task == 'musicstate':
