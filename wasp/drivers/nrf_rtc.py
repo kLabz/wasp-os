@@ -39,7 +39,8 @@ class RTC(object):
            machine.mem32[0x200039dc] == 0x10adab1e:
             self.lastcount = self.counter.counter()
             self.offset = machine.mem32[0x200039c4]
-            self._uptime = machine.mem32[0x200039c8] // 125
+            self._uptime = 0
+            # self._uptime = machine.mem32[0x200039c8] // 125
         else:
             machine.mem32[0x200039c0] = 0x1abe11ed
             machine.mem32[0x200039dc] = 0x10adab1e
