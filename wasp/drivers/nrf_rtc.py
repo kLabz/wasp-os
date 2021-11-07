@@ -34,17 +34,17 @@ class RTC(object):
         :param RTCounter counter: The RTCCounter channel to adopt.
         """
         self.counter = counter
+        self._uptime = 0
 
         if machine.mem32[0x200039c0] == 0x1abe11ed and \
            machine.mem32[0x200039dc] == 0x10adab1e:
             self.lastcount = self.counter.counter()
-            self.offset = machine.mem32[0x200039c4] + machine.mem32[0x200039c8] // 125
+            machine.mem32[0x200039c4] = machine.mem32[0x200039c4] + ((machine.mem32[0x200039c8] // 125) >> 3)
             machine.mem32[0x200039c8] = 0
-            self._uptime = 0
+            self.offset = machine.mem32[0x200039c4]
         else:
             machine.mem32[0x200039c0] = 0x1abe11ed
             machine.mem32[0x200039dc] = 0x10adab1e
-            self._uptime = 0
             self.set_localtime((2020, 3, 1, 3, 0, 0, 0, 0))
 
     @micropython.native
