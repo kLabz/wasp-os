@@ -12,4 +12,9 @@ manifest = (
     'fonts/sans36.py',
     'fonts/sans18.py',
     'steplogger.py',
+    'app/baseapplication.py',
+    'app/alarm/app.py',
+    'app/alarm/manifest.py',
+    'app/software/app.py',
+    'app/software/manifest.py',
 )
