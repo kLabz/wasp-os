@@ -11,7 +11,6 @@ manifest = (
     'fonts/sans28.py',
     'fonts/sans36.py',
     'fonts/sans18.py',
-    'icons.py',
     'steplogger.py',
     'wash/app/alarmapp.py',
     'wash/app/baseapplication.py',
